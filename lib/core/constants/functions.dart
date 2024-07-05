@@ -1,6 +1,15 @@
 import 'package:authenticator/core/constants/enums.dart';
 import 'package:flutter/material.dart';
 
+String emptyFieldValidationMessage(String fieldName) =>
+    "$fieldName cannot be empty.";
+
+String requriedFieldValidationMessage(String fieldName) =>
+    "$fieldName is requried.";
+
+String invalidFieldValidationMessage(String filedName, String value) =>
+    "$value is not valid $filedName";
+
 ScreenSize getScreenSize(BuildContext context) {
   final width = MediaQuery.of(context).size.width;
   if (width < 600) {
