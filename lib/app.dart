@@ -1,3 +1,4 @@
+import 'package:authenticator/bloc/auth/auth_bloc.dart';
 import 'package:authenticator/core/constants/strings.dart';
 import 'package:authenticator/core/router/app_router.dart';
 import 'package:authenticator/core/router/custom_navigator_observer.dart';
@@ -24,6 +25,7 @@ class _AppState extends State<App> {
     return MaterialApp.router(
       routerConfig: sl<AppRouter>().config(
         navigatorObservers: () => [CustomNavigatorObserver()],
+        reevaluateListenable: sl<AuthBloc>().auth,
       ),
       themeMode: MaterialTheme.themeMode,
       theme: theme.light(),
