@@ -1,4 +1,5 @@
 import 'package:authenticator/core/constants/enums.dart';
+import 'package:authenticator/core/constants/strings.dart';
 import 'package:flutter/material.dart';
 
 String emptyFieldValidationMessage(String fieldName) =>
@@ -24,3 +25,10 @@ ScreenSize getScreenSize(BuildContext context) {
     return ScreenSize.xLarge;
   }
 }
+
+Uri uriWithPath(String path, [Map<String, dynamic>? params]) => Uri(
+      scheme: kScheme,
+      host: kDomain,
+      path: path,
+      queryParameters: params,
+    );

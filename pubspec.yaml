@@ -9,8 +9,10 @@ environment:
 
 dependencies:
   auto_route: ^8.2.0
+  connectivity_plus: ^6.0.3
   cookie_jar: ^4.0.8
   cupertino_icons: ^1.0.8
+  dartz: ^0.10.1
   dio: ^5.5.0+1
   dio_cookie_manager: ^3.1.1
   equatable: ^2.0.5
@@ -21,6 +23,7 @@ dependencies:
   get_it: ^8.0.0-pre-5
   google_fonts: ^6.2.1
   hive: 4.0.0-dev.2
+  internet_connection_checker: ^1.0.0+1
   isar_flutter_libs: 4.0.0-dev.14
   json: ^0.20.2
   otp: ^3.1.4

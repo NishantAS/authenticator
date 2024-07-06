@@ -1,2 +1,1 @@
-part 'strings/hive.dart';
-part 'strings/style.dart';
+part 'strings/core.dart';
