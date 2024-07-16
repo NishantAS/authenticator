@@ -7,6 +7,10 @@ import 'package:authenticator/core/storage/local_storage.dart';
 import 'package:authenticator/data/otp_code/datasources/otp_package_datasource.dart';
 import 'package:authenticator/data/otp_code/datasources/secrets_local_datasource.dart';
 import 'package:authenticator/data/otp_code/datasources/secrets_remote_datasource.dart';
+import 'package:authenticator/data/otp_code/repositories/secrets_repository_impl.dart';
+import 'package:authenticator/data/otp_code/repositories/totp_repository_impl.dart';
+import 'package:authenticator/domain/otp_code/repositories/secrets_repository.dart';
+import 'package:authenticator/domain/otp_code/repositories/totp_repository.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
@@ -19,6 +23,7 @@ import 'package:path_provider/path_provider.dart';
 part 'bloc.dart';
 part 'core.dart';
 part 'datasource.dart';
+part 'repository.dart';
 
 final sl = GetIt.asNewInstance();
 
@@ -28,5 +33,6 @@ Future<void> slInit() async {
   slInitBloc();
   slInitCore();
   slInitDatasource();
+  slInitRepository();
   await sl.allReady();
 }
