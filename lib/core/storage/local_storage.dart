@@ -1,14 +1,10 @@
-import 'dart:io';
-
 import 'package:authenticator/core/constants/strings.dart';
 import 'package:authenticator/data/otp_code/model/secret_model.dart';
 import 'package:flutter/material.dart';
 import 'package:hive/hive.dart';
 
 class LocalStorage {
-  LocalStorage(Directory dir) {
-    Hive.defaultDirectory = dir.path;
-  }
+  const LocalStorage();
 
   ThemeMode getTheme() {
     final config = Hive.box<String>(name: kConfigBoxName);

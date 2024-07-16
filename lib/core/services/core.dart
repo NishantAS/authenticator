@@ -4,6 +4,8 @@ void slInitCore() {
   sl.registerSingleton(GlobalKey<NavigatorState>());
   sl.registerLazySingleton(() => AppRouter(navigatorKey: sl()));
   sl.registerSingletonAsync(
-    () async => LocalStorage(await getApplicationDocumentsDirectory()),
+    () => getApplicationDocumentsDirectory(),
+    instanceName: "Hive.defaultDirectory",
   );
+  sl.registerSingleton(const LocalStorage());
 }

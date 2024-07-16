@@ -11,9 +11,10 @@ part 'bloc.dart';
 
 final sl = GetIt.asNewInstance();
 
-void slInit() {
+Future<void> slInit() async {
   GetIt.noDebugOutput = kDebugMode;
 
   slInitCore();
   slInitBloc();
+  await sl.allReady();
 }
