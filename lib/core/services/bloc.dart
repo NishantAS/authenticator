@@ -12,4 +12,5 @@ void slInitBloc() {
       deleteSecret: sl(),
     ),
   );
+  sl.registerFactory(() => OtpCodeBloc(generateTotp: sl()));
 }

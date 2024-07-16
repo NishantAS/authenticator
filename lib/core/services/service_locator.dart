@@ -1,4 +1,5 @@
 import 'package:authenticator/bloc/auth/auth_bloc.dart';
+import 'package:authenticator/bloc/otp_code/otp_code_bloc.dart';
 import 'package:authenticator/bloc/secrets/secrets_bloc.dart';
 import 'package:authenticator/core/network/dio_client.dart';
 import 'package:authenticator/core/network/network_client.dart';
