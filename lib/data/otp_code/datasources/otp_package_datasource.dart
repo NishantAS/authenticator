@@ -10,7 +10,7 @@ class OtpPackageDatasourceImpl implements OtpPackageDatasource {
   int genTotp(Secret secret) => OTP.generateTOTPCode(
         secret.value,
         DateTime.now().millisecondsSinceEpoch,
-        interval: secret.interval,
+        interval: secret.interval.inSeconds,
         isGoogle: secret.isGoogle,
         length: secret.length,
       );

@@ -1,11 +1,17 @@
+import 'package:authenticator/core/constants/enums.dart';
 import 'package:authenticator/core/constants/functions.dart';
 import 'package:authenticator/core/network/network_client.dart';
-import 'package:authenticator/data/otp_code/model/secret_model.dart';
+import 'package:authenticator/domain/otp_code/entities/secret_partial_template.dart';
+import 'package:authenticator/domain/otp_code/entities/secret_template.dart';
+
+import '../model/secret_model.dart';
 
 abstract class SecretsRemoteDatasource {
   Future<Iterable<SecretModel>> getSecrets();
-  Future<void> saveSecret(SecretModel secret);
-  Future<void> deleteSecret(SecretModel secret);
+  Future<SecretModel> getSecret(String id);
+  Future<bool> updateSecret(String id, SecretPartialTemplate secret);
+  Future<String> saveSecret(SecretTemplate secret);
+  Future<bool> deleteSecret(String id);
 }
 
 class SecretsRemoteDatasourceImpl implements SecretsRemoteDatasource {
@@ -15,10 +21,12 @@ class SecretsRemoteDatasourceImpl implements SecretsRemoteDatasource {
       : _networkClient = networkClient;
 
   @override
-  Future<void> deleteSecret(SecretModel secret) => _networkClient.deleteUri(
-        uri: uriWithPath('/'),
-        body: {'name': secret.name},
-      );
+  Future<bool> deleteSecret(String id) async {
+    final res = await _networkClient.deleteUri(
+      uri: uriWithPath('/'),
+    );
+    return res.statusCode.type == StatusType.sucess;
+  }
 
   @override
   Future<Iterable<SecretModel>> getSecrets() async {
@@ -31,8 +39,26 @@ class SecretsRemoteDatasourceImpl implements SecretsRemoteDatasource {
   }
 
   @override
-  Future<void> saveSecret(SecretModel secret) => _networkClient.postUri(
-        uri: uriWithPath('/'),
-        body: {'secret': secret.toJson()},
-      );
+  Future<String> saveSecret(SecretTemplate secret) async {
+    final res = await _networkClient.putUri(
+      uri: uriWithPath('/'),
+      body: {'secret': secret.toJson()},
+    );
+    return (res.data as Map<String, String>)["id"]!;
+  }
+
+  @override
+  Future<SecretModel> getSecret(String id) async {
+    final res = await _networkClient.getUri(uri: uriWithPath('/'));
+    return SecretModel.fromJson(
+      ((res.data as Map)["secret"] as Map<String, dynamic>),
+    );
+  }
+
+  @override
+  Future<bool> updateSecret(String id, SecretPartialTemplate secret) async {
+    final res = await _networkClient
+        .patchUri(uri: uriWithPath('/'), body: {"secret": secret.toJson()});
+    return res.statusCode.type == StatusType.sucess;
+  }
 }

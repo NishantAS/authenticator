@@ -27,7 +27,16 @@ class LocalStorage {
       name: kSecretsBoxName,
       encryptionKey: kSecretsEncryptionKey,
     );
-    return secretsBox.getAll(secretsBox.keys).cast<SecretModel>();
+    final res = secretsBox.getAll(secretsBox.keys);
+    return res.nonNulls.cast<SecretModel>().toList();
+  }
+
+  SecretModel getSecret(String id) {
+    final secretsBox = Hive.box<SecretModel>(
+      name: kSecretsBoxName,
+      encryptionKey: kSecretsEncryptionKey,
+    );
+    return secretsBox.get(id)!;
   }
 
   void saveSecret(SecretModel secret) {
@@ -35,7 +44,7 @@ class LocalStorage {
       name: kSecretsBoxName,
       encryptionKey: kSecretsEncryptionKey,
     );
-    secretsBox[secret.name] = secret;
+    secretsBox[secret.id] = secret;
   }
 
   void reWriteSecrets(Iterable<SecretModel> secrets) {
@@ -44,50 +53,20 @@ class LocalStorage {
       encryptionKey: kSecretsEncryptionKey,
     );
     secretsBox.deleteAll(secretsBox.keys);
-    secretsBox.putAll(Map.fromEntries(secrets.map(
-      (secret) => MapEntry(secret.name, secret),
-    )));
+    secretsBox.putAll(
+      Map.fromEntries(
+        secrets.map(
+          (secret) => MapEntry(secret.id, secret),
+        ),
+      ),
+    );
   }
 
-  void deleteSecret(SecretModel secret) {
+  void deleteSecret(String id) {
     final secretsBox = Hive.box<SecretModel>(
       name: kSecretsBoxName,
       encryptionKey: kSecretsEncryptionKey,
     );
-    secretsBox.delete(secret.name);
-  }
-
-  List<SecretModel> getDeletedSecrets() {
-    final secretsBox = Hive.box<SecretModel>(
-      name: kDeletedSecretsBoxName,
-      encryptionKey: kSecretsEncryptionKey,
-    );
-    return secretsBox.getAll(secretsBox.keys).cast<SecretModel>();
-  }
-
-  void saveDeletedSecret(SecretModel secret) {
-    final secretsBox = Hive.box<SecretModel>(
-      name: kDeletedSecretsBoxName,
-      encryptionKey: kSecretsEncryptionKey,
-    );
-    secretsBox[secret.name] = secret;
-  }
-
-  void clearDeletedSecrets() {
-    final secretsBox = Hive.box<SecretModel>(
-      name: kSecretsBoxName,
-      encryptionKey: kSecretsEncryptionKey,
-    );
-    secretsBox.deleteFromDisk();
-  }
-
-  bool get syncStat {
-    final configBox = Hive.box<String>(name: kConfigBoxName);
-    return bool.parse(configBox[kConfigBoxPropSyncStat]!);
-  }
-
-  set syncStat(bool val) {
-    final configBox = Hive.box<String>(name: kConfigBoxName);
-    configBox[kConfigBoxPropSyncStat] = val.toString();
+    secretsBox.delete(id);
   }
 }
