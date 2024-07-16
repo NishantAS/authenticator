@@ -3,25 +3,24 @@ import 'package:authenticator/core/constants/enums.dart';
 import 'package:authenticator/core/constants/functions.dart';
 import 'package:authenticator/core/router/app_router.dart';
 import 'package:authenticator/core/services/service_locator.dart';
-import 'package:authenticator/presentation/home/widgets/navigation_rail_entry_widget.dart';
-import 'package:authenticator/presentation/home/widgets/navigation_rail_widget.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../widgets/navigation_rail_entry_widget.dart';
+import '../widgets/navigation_rail_widget.dart';
 
 class CustomNavigationDestination {
   final Widget icon;
   final Widget selectedIcon;
   final String label;
   final bool enabled;
-  final String relPath;
 
   const CustomNavigationDestination({
     required this.icon,
     required this.selectedIcon,
     required this.label,
     required this.enabled,
-    required this.relPath,
   });
 }
 
@@ -31,14 +30,12 @@ const destinations = <CustomNavigationDestination>[
     selectedIcon: Icon(Icons.home),
     label: "Home",
     enabled: true,
-    relPath: '/',
   ),
   CustomNavigationDestination(
     icon: Icon(Icons.settings_outlined),
     selectedIcon: Icon(Icons.settings),
     label: "Settings",
     enabled: true,
-    relPath: '/settings',
   ),
 ];
 
@@ -63,14 +60,14 @@ NavigationDestination _navigationDestination(
     );
 
 @RoutePage()
-class CodesScreen extends StatefulWidget {
-  const CodesScreen({super.key});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key});
 
   @override
-  State<CodesScreen> createState() => _CodesScreenState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _CodesScreenState extends State<CodesScreen> {
+class _HomeScreenState extends State<HomeScreen> {
   final _routerKey = GlobalKey<AutoTabsRouterState>();
 
   ValueNotifier<int> index = ValueNotifier(0);
@@ -87,7 +84,7 @@ class _CodesScreenState extends State<CodesScreen> {
     final body = AutoTabsRouter.pageView(
       key: _routerKey,
       routes: [
-        LoginRoute(onLogin: () {}),
+        const OtpCodesRoute(),
         SignUpRoute(onSignup: () {}),
       ],
       builder: (context, child, pageController) => child,
@@ -98,7 +95,6 @@ class _CodesScreenState extends State<CodesScreen> {
       create: (context) => sl<AuthBloc>(),
       child: switch (screenType) {
         ScreenSize.compact => Scaffold(
-            appBar: AppBar(),
             body: body,
             bottomNavigationBar: ValueListenableBuilder(
               valueListenable: index,
@@ -170,10 +166,6 @@ class _CodesScreenState extends State<CodesScreen> {
                   body: body,
                 ),
               ),
-              if (screenType == ScreenSize.xLarge)
-                const Expanded(
-                  child: Scaffold(),
-                )
             ],
           ),
       },

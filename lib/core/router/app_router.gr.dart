@@ -15,10 +15,10 @@ abstract class _$AppRouter extends RootStackRouter {
 
   @override
   final Map<String, PageFactory> pagesMap = {
-    CodesRoute.name: (routeData) {
+    HomeRoute.name: (routeData) {
       return AutoRoutePage<dynamic>(
         routeData: routeData,
-        child: const CodesScreen(),
+        child: const HomeScreen(),
       );
     },
     LoginRoute.name: (routeData) {
@@ -29,6 +29,24 @@ abstract class _$AppRouter extends RootStackRouter {
           key: args.key,
           onLogin: args.onLogin,
         ),
+      );
+    },
+    OtpCodeRoute.name: (routeData) {
+      final pathParams = routeData.inheritedPathParams;
+      final args = routeData.argsAs<OtpCodeRouteArgs>(
+          orElse: () => OtpCodeRouteArgs(id: pathParams.getString('secret')));
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: OtpCodeScreen(
+          key: args.key,
+          id: args.id,
+        ),
+      );
+    },
+    OtpCodesRoute.name: (routeData) {
+      return AutoRoutePage<dynamic>(
+        routeData: routeData,
+        child: const OtpCodesScreen(),
       );
     },
     SignUpRoute.name: (routeData) {
@@ -45,15 +63,15 @@ abstract class _$AppRouter extends RootStackRouter {
 }
 
 /// generated route for
-/// [CodesScreen]
-class CodesRoute extends PageRouteInfo<void> {
-  const CodesRoute({List<PageRouteInfo>? children})
+/// [HomeScreen]
+class HomeRoute extends PageRouteInfo<void> {
+  const HomeRoute({List<PageRouteInfo>? children})
       : super(
-          CodesRoute.name,
+          HomeRoute.name,
           initialChildren: children,
         );
 
-  static const String name = 'CodesRoute';
+  static const String name = 'HomeRoute';
 
   static const PageInfo<void> page = PageInfo<void>(name);
 }
@@ -93,6 +111,59 @@ class LoginRouteArgs {
   String toString() {
     return 'LoginRouteArgs{key: $key, onLogin: $onLogin}';
   }
+}
+
+/// generated route for
+/// [OtpCodeScreen]
+class OtpCodeRoute extends PageRouteInfo<OtpCodeRouteArgs> {
+  OtpCodeRoute({
+    Key? key,
+    required String id,
+    List<PageRouteInfo>? children,
+  }) : super(
+          OtpCodeRoute.name,
+          args: OtpCodeRouteArgs(
+            key: key,
+            id: id,
+          ),
+          rawPathParams: {'secret': id},
+          initialChildren: children,
+        );
+
+  static const String name = 'OtpCodeRoute';
+
+  static const PageInfo<OtpCodeRouteArgs> page =
+      PageInfo<OtpCodeRouteArgs>(name);
+}
+
+class OtpCodeRouteArgs {
+  const OtpCodeRouteArgs({
+    this.key,
+    required this.id,
+  });
+
+  final Key? key;
+
+  final String id;
+
+  @override
+  String toString() {
+    return 'OtpCodeRouteArgs{key: $key, id: $id}';
+  }
+}
+
+/// generated route for
+/// [OtpCodesScreen]
+class OtpCodesRoute extends PageRouteInfo<void> {
+  const OtpCodesRoute({List<PageRouteInfo>? children})
+      : super(
+          OtpCodesRoute.name,
+          initialChildren: children,
+        );
+
+  static const String name = 'OtpCodesRoute';
+
+  static const PageInfo<void> page = PageInfo<void>(name);
 }
 
 /// generated route for

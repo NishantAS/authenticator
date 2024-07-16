@@ -2,7 +2,9 @@ import 'package:authenticator/core/router/guards/auth_route_guard.dart';
 import 'package:authenticator/core/services/service_locator.dart';
 import 'package:authenticator/presentation/auth/pages/login_screen.dart';
 import 'package:authenticator/presentation/auth/pages/sign_up_screen.dart';
-import 'package:authenticator/presentation/home/pages/codes_screen.dart';
+import 'package:authenticator/presentation/home/pages/home_screen.dart';
+import 'package:authenticator/presentation/home/pages/otp_code_screen.dart';
+import 'package:authenticator/presentation/home/pages/otp_codes_screen.dart';
 import 'package:auto_route/auto_route.dart';
 import 'package:flutter/material.dart';
 
@@ -22,12 +24,17 @@ class AppRouter extends _$AppRouter {
           page: SignUpRoute.page,
           path: '/signUp',
         ),
+        AutoRoute(page: OtpCodeRoute.page, path: "/codes/:secret"),
         AutoRoute(
-          page: CodesRoute.page,
+          page: HomeRoute.page,
           path: '/',
           guards: [AuthRouteGuard(auth: sl())],
           children: [
-            AutoRoute(page: LoginRoute.page),
+            AutoRoute(
+              path: 'codes',
+              page: OtpCodesRoute.page,
+              children: [AutoRoute(page: OtpCodeRoute.page, path: ":secret")],
+            ),
             AutoRoute(page: SignUpRoute.page),
           ],
           initial: true,
