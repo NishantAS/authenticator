@@ -20,12 +20,13 @@ dependencies:
     sdk: flutter
   flutter_barcode_scanner: ^2.0.0 # TODO: make the ios config changes after running flutter build ios
   flutter_bloc: ^8.1.6
+  freezed_annotation: ^2.4.4
   get_it: ^8.0.0-pre-5
   google_fonts: ^6.2.1
   hive: 4.0.0-dev.2
   internet_connection_checker: ^1.0.0+1
   isar_flutter_libs: 4.0.0-dev.14
-  json: ^0.20.2
+  json_annotation: ^4.9.0
   otp: ^3.1.4
   path_provider: ^2.1.3
 
@@ -35,6 +36,8 @@ dev_dependencies:
   flutter_lints: ^4.0.0
   flutter_test:
     sdk: flutter
+  freezed: ^2.5.7
+  json_serializable: ^6.8.0
 
 flutter:
   uses-material-design: true
