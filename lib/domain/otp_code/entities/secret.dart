@@ -1,18 +1,17 @@
-import 'package:json/json.dart';
-
-@JsonCodable()
-class Secret {
+abstract class Secret {
+  final String id;
   final String value;
   final String name;
-  final int interval;
+  final Duration interval;
   final int length;
   final bool isGoogle;
 
   const Secret({
+    required this.id,
     required this.value,
     required this.name,
-    this.interval = 0,
-    this.length = 0,
+    this.interval = const Duration(seconds: 30),
+    this.length = 6,
     this.isGoogle = false,
   });
 }
