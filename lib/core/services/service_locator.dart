@@ -11,6 +11,12 @@ import 'package:authenticator/data/otp_code/repositories/secrets_repository_impl
 import 'package:authenticator/data/otp_code/repositories/totp_repository_impl.dart';
 import 'package:authenticator/domain/otp_code/repositories/secrets_repository.dart';
 import 'package:authenticator/domain/otp_code/repositories/totp_repository.dart';
+import 'package:authenticator/domain/otp_code/usecases/delete_secret.dart';
+import 'package:authenticator/domain/otp_code/usecases/generate_totp.dart';
+import 'package:authenticator/domain/otp_code/usecases/get_secret.dart';
+import 'package:authenticator/domain/otp_code/usecases/get_secrets.dart';
+import 'package:authenticator/domain/otp_code/usecases/save_secret.dart';
+import 'package:authenticator/domain/otp_code/usecases/update_secret.dart';
 import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:cookie_jar/cookie_jar.dart';
 import 'package:dio/dio.dart';
@@ -24,6 +30,7 @@ part 'bloc.dart';
 part 'core.dart';
 part 'datasource.dart';
 part 'repository.dart';
+part 'usecase.dart';
 
 final sl = GetIt.asNewInstance();
 
@@ -33,6 +40,7 @@ Future<void> slInit() async {
   slInitBloc();
   slInitCore();
   slInitDatasource();
+  slInitUsecase();
   slInitRepository();
   await sl.allReady();
 }
