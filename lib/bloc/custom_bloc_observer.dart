@@ -10,7 +10,11 @@ class CustomBlocObserver implements BlocObserver {
 
   @override
   void onError(BlocBase<dynamic> bloc, Object error, StackTrace stackTrace) {
-    log("${bloc.runtimeType} error with hash ${bloc.hashCode}", error: error, stackTrace: stackTrace);
+    log(
+      "${bloc.runtimeType} error with hash ${bloc.hashCode}",
+      error: error,
+      stackTrace: stackTrace,
+    );
   }
 
   @override

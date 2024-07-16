@@ -12,5 +12,4 @@ class AppFailure {
     this.stackTrace,
     required this.errorMessage,
   });
-
 }

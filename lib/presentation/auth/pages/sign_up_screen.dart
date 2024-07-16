@@ -63,9 +63,7 @@ class _Logo extends StatelessWidget {
             textAlign: TextAlign.center,
             style: isSmallScreen
                 ? Theme.of(context).textTheme.headlineMedium
-                : Theme.of(context)
-                    .textTheme
-                    .headlineLarge,
+                : Theme.of(context).textTheme.headlineLarge,
           ),
         )
       ],

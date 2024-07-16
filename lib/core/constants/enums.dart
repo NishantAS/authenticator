@@ -28,6 +28,7 @@ enum StatusCode {
   switchProtocols(101),
   processing(102),
   earlyHints(103),
+
   ok(200),
   created(201),
   accepted(202),
@@ -38,6 +39,7 @@ enum StatusCode {
   multiStatus(207),
   alreadyReported(208),
   iMUsed(226),
+
   multipleChoices(300),
   movedPermanently(301),
   found(302),
@@ -45,6 +47,7 @@ enum StatusCode {
   notModified(304),
   temporaryRedirect(307),
   permanentRedirect(308),
+
   badRequest(400),
   unauthorized(401),
   paymentRequired(402),
@@ -74,6 +77,7 @@ enum StatusCode {
   tooManyRequests(429),
   requestHeaderFieldsTooLarge(431),
   unavailableForLeagalReasons(451),
+
   internalServerError(500),
   notImplemented(501),
   badGateway(502),
@@ -85,6 +89,7 @@ enum StatusCode {
   loopDetected(508),
   notExtended(510),
   networkAuthenticationRequired(511),
+
   none(-1);
 
   const StatusCode(this.value)
