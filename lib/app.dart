@@ -7,14 +7,9 @@ import 'package:authenticator/core/style/theme.dart';
 import 'package:authenticator/core/style/util.dart';
 import 'package:flutter/material.dart';
 
-class App extends StatefulWidget {
+class App extends StatelessWidget {
   const App({super.key});
 
-  @override
-  State<App> createState() => _AppState();
-}
-
-class _AppState extends State<App> {
   @override
   Widget build(BuildContext context) {
     final theme = MaterialTheme(createTextTheme(
@@ -23,6 +18,7 @@ class _AppState extends State<App> {
       kDisplayFont,
     ));
     return MaterialApp.router(
+      debugShowCheckedModeBanner: false,
       routerConfig: sl<AppRouter>().config(
         navigatorObservers: () => [CustomNavigatorObserver()],
         reevaluateListenable: sl<AuthBloc>().auth,
