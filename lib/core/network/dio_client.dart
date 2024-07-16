@@ -105,10 +105,12 @@ class DioClient implements NetworkClient<DioRequestToken, DioResponse> {
   Future<DioResponse> getUri({
     required Uri uri,
     DioRequestToken? requestToken,
+    void Function(int count, int total)? receiveProgess,
   }) =>
       _tryCatchRequest(() => _dio.getUri<dio.Response<dynamic>>(
             uri,
             cancelToken: requestToken?._cancelToken,
+            onReceiveProgress: receiveProgess,
           ));
 
   @override
@@ -120,11 +122,15 @@ class DioClient implements NetworkClient<DioRequestToken, DioResponse> {
     required Uri uri,
     dynamic body,
     DioRequestToken? requestToken,
+    void Function(int count, int total)? sendProgress,
+    void Function(int count, int total)? receiveProgess,
   }) =>
       _tryCatchRequest(() => _dio.patchUri<dio.Response<dynamic>>(
             uri,
             data: body,
             cancelToken: requestToken?._cancelToken,
+            onSendProgress: sendProgress,
+            onReceiveProgress: receiveProgess,
           ));
 
   @override
@@ -132,11 +138,15 @@ class DioClient implements NetworkClient<DioRequestToken, DioResponse> {
     required Uri uri,
     dynamic body,
     DioRequestToken? requestToken,
+    void Function(int count, int total)? sendProgress,
+    void Function(int count, int total)? receiveProgess,
   }) =>
       _tryCatchRequest(() => _dio.postUri<dio.Response<dynamic>>(
             uri,
             data: body,
             cancelToken: requestToken?._cancelToken,
+            onSendProgress: sendProgress,
+            onReceiveProgress: receiveProgess,
           ));
 
   @override
@@ -144,11 +154,15 @@ class DioClient implements NetworkClient<DioRequestToken, DioResponse> {
     required Uri uri,
     dynamic body,
     DioRequestToken? requestToken,
+    void Function(int count, int total)? sendProgress,
+    void Function(int count, int total)? receiveProgess,
   }) =>
       _tryCatchRequest(() => _dio.putUri<dio.Response<dynamic>>(
             uri,
             data: body,
             cancelToken: requestToken?._cancelToken,
+            onSendProgress: sendProgress,
+            onReceiveProgress: receiveProgess,
           ));
 
   Future<void> _errorInterceptor(
@@ -248,13 +262,15 @@ class DioClient implements NetworkClient<DioRequestToken, DioResponse> {
   }
 
   void _responseInterceptor(
-      dio.Response<dynamic> response, ResponseInterceptorHandler handler) {
+    dio.Response<dynamic> response,
+    ResponseInterceptorHandler handler,
+  ) {
     log("Response ${response.statusCode} from ${response.realUri}");
     log("Headers : ${response.headers}");
     log("Data : ${response.data}");
 
     if (response.isRedirect && response.realUri.authority == kDomain) {
-      sl<AppRouter>().pushNamed(
+      sl<AppRouter>().navigateNamed(
         response.realUri.path,
         onFailure: (failure) => log(failure.toString()),
       );
@@ -264,7 +280,8 @@ class DioClient implements NetworkClient<DioRequestToken, DioResponse> {
   }
 
   Future<DioResponse> _tryCatchRequest(
-      Future<dio.Response<dynamic>> Function() request) {
+    Future<dio.Response<dynamic>> Function() request,
+  ) {
     try {
       return request().then((response) => DioResponse(response));
     } on DioException catch (e) {

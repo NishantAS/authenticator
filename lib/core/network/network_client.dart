@@ -35,6 +35,7 @@ abstract class NetworkClient<T1 extends RequestToken, T2 extends Response> {
     dynamic body,
     T1? requestToken,
   });
+
   Future<T2> downlaodUri({
     required Uri uri,
     dynamic body,
@@ -42,25 +43,38 @@ abstract class NetworkClient<T1 extends RequestToken, T2 extends Response> {
     T1? requestToken,
     void Function(int count, int total)? receiveProgess,
   });
+
   dynamic formDataFromMap({required Map<String, dynamic> body});
+
   Future<T2> getUri({
     required Uri uri,
     T1? requestToken,
+    void Function(int count, int total)? receiveProgess,
   });
+
   Future<dynamic> multipartFileFromFile({required String path});
+
   Future<T2> patchUri({
     required Uri uri,
     dynamic body,
     T1? requestToken,
+    void Function(int count, int total)? sendProgress,
+    void Function(int count, int total)? receiveProgess,
   });
+
   Future<T2> postUri({
     required Uri uri,
     dynamic body,
     T1? requestToken,
+    void Function(int count, int total)? sendProgress,
+    void Function(int count, int total)? receiveProgess,
   });
+
   Future<T2> putUri({
     required Uri uri,
     dynamic body,
     T1? requestToken,
+    void Function(int count, int total)? sendProgress,
+    void Function(int count, int total)? receiveProgess,
   });
 }
